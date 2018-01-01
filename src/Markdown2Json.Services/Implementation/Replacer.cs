@@ -20,5 +20,11 @@
 
             return (type.StartsWith('=') ? "# " : "## ") + header;
         }
+
+        public string RemoveGrave(string text)
+        {
+            var regex = new Regex("`");
+            return regex.Replace(text,string.Empty);            
+        }
     }
 }

@@ -7,7 +7,7 @@
     {
         public void OverwriteFile(string path, string text)
         {
-            using (var stream = new FileStream(path, FileMode.OpenOrCreate))
+            using (var stream = new FileStream(path, FileMode.OpenOrCreate | FileMode.Truncate))
             using (var writer = new StreamWriter(stream, Encoding.UTF8))
             {               
                 writer.Write(text);

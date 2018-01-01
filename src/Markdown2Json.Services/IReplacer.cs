@@ -3,5 +3,6 @@
     public interface IReplacer
     {
         string ReplaceHeadlines(string text);
+        string RemoveGrave(string text);
     }
 }

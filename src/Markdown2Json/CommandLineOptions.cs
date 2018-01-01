@@ -29,6 +29,9 @@ namespace Markdown2Json
         public bool GenerateSeperateFiles { get; set; }
 
         [Option('c', "complete", HelpText = "Erzeugt eine Datei die alle Seiten enthält")]
-        public bool GenerateOneFile { get; set; }       
+        public bool GenerateCompleteFile { get; set; }
+
+        [Option('g', "grave", HelpText = "Entfert den Gravis-Accent.")]
+        public bool RemoveGrave { get; set; }
     }
 }

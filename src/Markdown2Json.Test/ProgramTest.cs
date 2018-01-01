@@ -23,7 +23,7 @@
         {
             var data = new CommandLineOptions
             {
-                GenerateOneFile = true,
+                GenerateCompleteFile = true,
             };
             var actual = Program.ParseExporterOptions(data);
             var expected = ExporterOptions.GenerateCompleteFile;
@@ -81,7 +81,7 @@
             var data = new CommandLineOptions
             {
                 GenerateSeperateFiles = true,
-                GenerateOneFile = true,
+                GenerateCompleteFile = true,
                 GeneratePagelist = true,
                 IncludeUnderlineNotation = true,
             };

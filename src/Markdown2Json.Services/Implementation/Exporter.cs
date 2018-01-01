@@ -56,6 +56,11 @@
             {
                 text = this.replacer.ReplaceHeadlines(text);
             }
+            
+            if ((this.options & ExporterOptions.RemoveGravis) == ExporterOptions.RemoveGravis)
+            {
+                text = this.replacer.RemoveGrave(text);
+            }
 
             var pages = this.parser.Parse(text).ToList();
             this.structorizer.Structure(pages);

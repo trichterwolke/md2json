@@ -70,7 +70,7 @@
         {
             ExporterOptions result = ExporterOptions.None;
 
-            if(options.GenerateOneFile)
+            if(options.GenerateCompleteFile)
             {
                 result |= ExporterOptions.GenerateCompleteFile;
             }
@@ -88,6 +88,11 @@
             if (options.IncludeUnderlineNotation)
             {
                 result |= ExporterOptions.IncludeUnderlineNotation;
+            }
+
+            if(options.RemoveGrave)
+            {
+                result |= ExporterOptions.RemoveGravis;
             }
 
             return result;
