@@ -5,12 +5,13 @@
     using System.Collections.Generic;
     using Markdown2Json;
     using System.IO;
+    using Markdown2Json.Entities;
 
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            var result = Parser.Default.ParseArguments<Options>(args);
+            var result = Parser.Default.ParseArguments<CommandLineOptions>(args);
             result.WithNotParsed(ShowError);
             result.WithParsed(CreateJson);
         }
@@ -20,10 +21,11 @@
             foreach (var error in errors)
             {
                 Console.WriteLine(error);
+                //Console.Read();
             }
         }
 
-        static void CreateJson(Options options)
+        static void CreateJson(CommandLineOptions options)
         {
             var source = new FileInfo(options.Source);
             if (!source.Exists)
@@ -31,19 +33,64 @@
                 Console.WriteLine($"File {source} not exists");
                 return;
             }
-            
+
+            var exporterOptions = ParseExporterOptions(options);
+            if(!ValidateExporterOptions(exporterOptions))
+            {
+                //Console.Read();
+                return;
+            }
 
             try
             {
-                Exporter.Create().Export(options.Source, options.Destination);
+                Exporter.Create(exporterOptions).Export(options.Source, options.Destination);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+            finally
+            {
+                //Console.WriteLine("Press any key");
+                //Console.Read();
+            }
+        }    
+        
+        public static bool ValidateExporterOptions(ExporterOptions options)
+        {
+            if(!options.IsGeneretorSelected())
+            {
+                Console.WriteLine("Es muss mindestens eine Exportoption angegeben werden.\nFür Hilfe --help angeben.");
+                return false;
+            }
+            return true;
+        }
 
-            //Console.WriteLine("Press any key");
-            //Console.Read();
-        }     
+        public static ExporterOptions ParseExporterOptions(CommandLineOptions options)
+        {
+            ExporterOptions result = ExporterOptions.None;
+
+            if(options.GenerateOneFile)
+            {
+                result |= ExporterOptions.GenerateCompleteFile;
+            }
+
+            if(options.GeneratePagelist)
+            {
+                result |= ExporterOptions.GeneratePagelist;
+            }
+
+            if(options.GenerateSeperateFiles)
+            {
+                result |= ExporterOptions.GenerateSeperateFiles;
+            }          
+
+            if (options.IncludeUnderlineNotation)
+            {
+                result |= ExporterOptions.IncludeUnderlineNotation;
+            }
+
+            return result;
+        }
     }
 }

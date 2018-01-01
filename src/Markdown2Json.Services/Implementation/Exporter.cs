@@ -2,6 +2,7 @@
 {
     using Markdown2Json.Entities;
     using Markdown2Json.Services;
+    using Markdown2Json.Services.Implementation;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -12,36 +13,67 @@
         private readonly IStructorizer structorizer;
         private readonly IParser parser;
         private readonly IFileService fileService;
+        private readonly IReplacer replacer;
+        private readonly ExporterOptions options;
 
-        public static Exporter Create()
+        public static Exporter Create(ExporterOptions options)
         {
             return new Exporter(
                 new Serializer(),
                 new Structorizer(),
                 new Parser(),
-                new FileService());
+                new FileService(),
+                new Replacer(),
+                options);
         }
 
         public Exporter(
-            ISerializer serializer, 
-            IStructorizer structorizer, 
-            IParser parser, 
-            IFileService fileService)
+            ISerializer serializer,
+            IStructorizer structorizer,
+            IParser parser,
+            IFileService fileService,
+            IReplacer replacer,
+            ExporterOptions options)
         {
             this.serializer = serializer;
             this.structorizer = structorizer;
             this.parser = parser;
             this.fileService = fileService;
+            this.replacer = replacer;
+            this.options = options;
         }
 
         public void Export(string source, string destination)
         {
-            var text = File.ReadAllText(source);
+            if (this.options.IsGeneretorSelected())
+            {
+                this.fileService.CreateIfNotExists(destination);
+            }
+
+            string text = File.ReadAllText(source);
+
+            if ((this.options & ExporterOptions.IncludeUnderlineNotation) == ExporterOptions.IncludeUnderlineNotation)
+            {
+                text = this.replacer.ReplaceHeadlines(text);
+            }
+
             var pages = this.parser.Parse(text).ToList();
             this.structorizer.Structure(pages);
 
-            ExportInOneFile(destination, pages);
-            ExportInSeparateFiles(destination, pages);
+            if ((this.options & ExporterOptions.GenerateCompleteFile) == ExporterOptions.GenerateCompleteFile)
+            {
+                ExportCompleteFile(destination, pages);
+            }
+
+            if ((this.options & ExporterOptions.GenerateSeperateFiles) == ExporterOptions.GenerateSeperateFiles)
+            {
+                ExportInSeparateFiles(destination, pages);
+            }
+
+            if ((this.options & ExporterOptions.GeneratePagelist) == ExporterOptions.GeneratePagelist)
+            {
+                ExportPageList(destination, pages);
+            }
         }
 
         public void ExportInSeparateFiles(string destination, IEnumerable<Page> pages)
@@ -55,25 +87,23 @@
             {
                 ExportFile(path, page);
             }
-
-            ExportPageList(destination, pages);
         }
 
         internal void ExportPageList(string directory, IEnumerable<Page> pages)
         {
             string text = this.serializer.CreatePageList(pages);
-            string path = Path.Combine(directory, "content.json");
+            string path = Path.Combine(directory, "list.json");
             this.fileService.OverwriteFile(path, text);
         }
 
         internal void ExportFile(string directory, Page page)
         {
             string text = this.serializer.Serialize(page);
-            string path = Path.Combine(directory, $"{page.Header}.json");
+            string path = Path.Combine(directory, $"{this.serializer.FlattenOrdering(page.Index)}.json");
             this.fileService.OverwriteFile(path, text);
         }
 
-        internal void ExportInOneFile(string directory, IEnumerable<Page> pages)
+        internal void ExportCompleteFile(string directory, IEnumerable<Page> pages)
         {
             string text = this.serializer.Serialize(pages);
             string path = Path.Combine(directory, "complete.json");

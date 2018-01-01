@@ -1,4 +1,4 @@
-﻿namespace Markdown2Json.Services
+﻿namespace Markdown2Json.Services.Implementation
 {
     using Markdown2Json.Entities;
     using System;
@@ -7,11 +7,11 @@
 
     public class Parser : IParser
     {
-        public const string Pattern = "(?<type>#+) +(?<header>.*)[^.](?<content>[^#]*)";
+        public const string Pattern = @"(?<type>#+) +(?<header>.*)(?<content>[\s\S]*?)(?=#+ |$)";
 
         public IEnumerable<Page> Parse(string text)
         {
-            var regex = new Regex(Pattern,RegexOptions.Multiline);
+            var regex = new Regex(Pattern, RegexOptions.ExplicitCapture);
             foreach (Match match in regex.Matches(text))
             {
                 string type = match.Groups["type"].Value?.Trim();

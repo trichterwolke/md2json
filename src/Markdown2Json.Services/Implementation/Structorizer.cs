@@ -14,13 +14,13 @@
                 if (lastPage == null)
                 {
                     // first page
-                    page.Ordering = new Ordering(1, 0, 0, 0);                    
+                    page.Index = new Index(1, 0, 0, 0);                    
                 }
                 else
                 {
                     lastPage.NextPage = page;
                     page.PreviousPage = lastPage;
-                    page.Ordering = lastPage.Ordering.CreateNext(page.Type);
+                    page.Index = lastPage.Index.CreateNext(page.Type);
                 }
 
                 lastPage = page;

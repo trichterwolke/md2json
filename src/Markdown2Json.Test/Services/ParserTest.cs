@@ -2,6 +2,7 @@ namespace Markdown2Json.Test
 {
     using Markdown2Json.Entities;
     using Markdown2Json.Services;
+    using Markdown2Json.Services.Implementation;
     using Markdown2Json.Test.Util;
     using System.Linq;
     using Xunit;
@@ -48,7 +49,7 @@ namespace Markdown2Json.Test
         public void ParseText_with_content()
         {
             var target = new Parser();
-            var actual = target.Parse("## Foo\r\nTschö mit ø").ToArray();
+            var actual = target.Parse("## Foo\r\nTsch#ö mit ø").ToArray();
 
             var expected = new[]
             {
@@ -56,7 +57,7 @@ namespace Markdown2Json.Test
                 {
                     Type = PageType.SubSection,
                     Header = "Foo",
-                    Content = "Tschö mit ø",
+                    Content = "Tsch#ö mit ø",
                 }
             };
 

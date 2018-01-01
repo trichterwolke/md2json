@@ -57,12 +57,12 @@
                 Content = "Sentu ipsum",
             };
 
-            firstPage.Ordering = new Ordering(1, 0, 0, 0);
+            firstPage.Index = new Index(1, 0, 0, 0);
             firstPage.NextPage = secondPage;
-            secondPage.Ordering = new Ordering(1, 0, 0, 1);
+            secondPage.Index = new Index(1, 0, 0, 1);
             secondPage.PreviousPage = firstPage;
             secondPage.NextPage = thirdPage;
-            thirdPage.Ordering = new Ordering(1, 1, 0, 0);
+            thirdPage.Index = new Index(1, 1, 0, 0);
             thirdPage.PreviousPage = secondPage;
 
             var expected = new[] { firstPage, secondPage, thirdPage };

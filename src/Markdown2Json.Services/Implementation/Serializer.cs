@@ -1,4 +1,4 @@
-﻿namespace Markdown2Json.Services
+﻿namespace Markdown2Json.Services.Implementation
 {
     using System;
     using System.Collections.Generic;
@@ -25,11 +25,11 @@
         {
             return new
             {
-                Ordering = FlattenOrdering(page.Ordering),
-                page.Header,
-                page.Content,
-                Nextpage = CreateFlatPageReference(page.NextPage),
-                PreviousPage = CreateFlatPageReference(page.PreviousPage),
+                index = FlattenOrdering(page.Index),
+                header = page.Header,
+                content = page.Content,
+                nextPage = CreateFlatPageReference(page.NextPage),
+                previousPage = CreateFlatPageReference(page.PreviousPage),
             };
         }
 
@@ -37,14 +37,14 @@
         {
             return page == null ? null : new
             {
-                Ordering = FlattenOrdering(page.Ordering),
-                page.Header,
+                index = FlattenOrdering(page.Index),
+                header = page.Header,
             };
         }
 
-        public string FlattenOrdering(Ordering ordering)
+        public string FlattenOrdering(Index index)
         {
-            return $"{ordering.Section}.{ordering.SubSection}.{ordering.SubSubSection}.{ordering.Segment}";
+            return $"{index.Section}.{index.SubSection}.{index.SubSubSection}.{index.Segment}";
         }
 
         public string CreatePageList(IEnumerable<Page> pages)

@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Markdown2Json.Entities\Markdown2Json.Entities.csproj" />
     <ProjectReference Include="..\Markdown2Json.Services\Markdown2Json.Services.csproj" />
+    <ProjectReference Include="..\Markdown2Json\Markdown2Json.csproj" />
   </ItemGroup>
 
 </Project>

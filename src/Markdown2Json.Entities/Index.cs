@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Markdown2Json.Entities
 {
-    public class Ordering
+    public class Index
     {
-        public Ordering(int section, int subSection, int subSubSection, int segment)
+        public Index(int section, int subSection, int subSubSection, int segment)
         {
             Section = section;
             SubSection = subSection;
@@ -22,18 +22,18 @@ namespace Markdown2Json.Entities
 
         public int Segment { get; set; }
 
-        public Ordering CreateNext(PageType pageType)
+        public Index CreateNext(PageType pageType)
         {
             switch (pageType)
             {
                 case PageType.Section:
-                    return new Ordering(Section + 1, 0, 0, 0);
+                    return new Index(Section + 1, 0, 0, 0);
                 case PageType.SubSection:
-                    return new Ordering(Section, SubSection + 1, 0, 0);
+                    return new Index(Section, SubSection + 1, 0, 0);
                 case PageType.SubSubSection:
-                    return new Ordering(Section, SubSection, SubSubSection + 1, 0);
+                    return new Index(Section, SubSection, SubSubSection + 1, 0);
                 case PageType.Segment:
-                    return new Ordering(Section, SubSection, SubSubSection, Segment + 1);
+                    return new Index(Section, SubSection, SubSubSection, Segment + 1);
                 default:
                     return null;
             }

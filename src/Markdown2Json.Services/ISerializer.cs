@@ -8,5 +8,6 @@ namespace Markdown2Json.Services
         string Serialize(IEnumerable<Page> pages);
         string Serialize(Page page);
         string CreatePageList(IEnumerable<Page> pages);
+        string FlattenOrdering(Index ordering);
     }
 }
