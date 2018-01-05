@@ -24,7 +24,7 @@
 
             if ((options & ExporterOptions.ConvertToHtml) == ExporterOptions.ConvertToHtml)
             {
-                contentConverter = s => Markdown.ToHtml(s);
+                contentConverter = s => Markdown.ToHtml(s ?? string.Empty);
             }           
 
             return new Exporter(
