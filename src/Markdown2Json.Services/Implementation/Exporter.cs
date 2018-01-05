@@ -1,8 +1,10 @@
 ﻿namespace Markdown2Json
 {
+    using Markdig;
     using Markdown2Json.Entities;
     using Markdown2Json.Services;
     using Markdown2Json.Services.Implementation;
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -18,8 +20,15 @@
 
         public static Exporter Create(ExporterOptions options)
         {
+            Func<string, string> contentConverter = s => s;
+
+            if ((options & ExporterOptions.ConvertToHtml) == ExporterOptions.ConvertToHtml)
+            {
+                contentConverter = s => Markdown.ToHtml(s);
+            }           
+
             return new Exporter(
-                new Serializer(),
+                new Serializer(contentConverter),
                 new Structorizer(),
                 new Parser(),
                 new FileService(),

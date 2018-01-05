@@ -11,6 +11,7 @@ namespace Markdown2Json.Entities
         GenerateSeperateFiles = 4,
         GenerateCompleteFile = 8,
         RemoveGravis = 16,
+        ConvertToHtml = 32,
     }
 
     public static class ExporterOptionsExtensitons

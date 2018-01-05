@@ -67,6 +67,18 @@
         }
 
         [Fact]
+        public void ParesExporterOptions_convert_to_html()
+        {
+            var data = new CommandLineOptions
+            {
+                ConvertToHtml = true,
+            };
+            var actual = Program.ParseExporterOptions(data);
+            var expected = ExporterOptions.ConvertToHtml;
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void ParesExporterOptions_none()
         {
             var data = new CommandLineOptions();

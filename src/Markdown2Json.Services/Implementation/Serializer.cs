@@ -1,14 +1,19 @@
 ﻿namespace Markdown2Json.Services.Implementation
 {
+    using Markdown2Json.Entities;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using System.Linq;
-    using Newtonsoft.Json;
-    using Markdown2Json.Entities;
 
     public class Serializer : ISerializer
     {
+        private Func<string, string> contentConverter;
+
+        public Serializer(Func<string, string> contentConverter)
+        {
+            this.contentConverter = contentConverter;
+        }
 
         public string Serialize(IEnumerable<Page> pages)
         {
@@ -27,7 +32,7 @@
             {
                 index = FlattenOrdering(page.Index),
                 header = page.Header,
-                content = page.Content,
+                content = contentConverter(page.Content),
                 nextPage = CreateFlatPageReference(page.NextPage),
                 previousPage = CreateFlatPageReference(page.PreviousPage),
             };

@@ -1,10 +1,7 @@
-﻿using CommandLine;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Markdown2Json
+﻿namespace Markdown2Json
 {
+    using CommandLine;
+
     public class CommandLineOptions
     {
         [Option('s',
@@ -33,5 +30,8 @@ namespace Markdown2Json
 
         [Option('g', "grave", HelpText = "Entfert den Gravis-Accent.")]
         public bool RemoveGrave { get; set; }
+
+        [Option('h', "html", HelpText = "Konvertiert Markdown zu HTLM.")]
+        public bool ConvertToHtml { get; set; }
     }
 }

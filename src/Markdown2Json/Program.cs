@@ -35,7 +35,7 @@
             }
 
             var exporterOptions = ParseExporterOptions(options);
-            if(!ValidateExporterOptions(exporterOptions))
+            if (!ValidateExporterOptions(exporterOptions))
             {
                 //Console.Read();
                 return;
@@ -54,11 +54,11 @@
                 //Console.WriteLine("Press any key");
                 //Console.Read();
             }
-        }    
-        
+        }
+
         public static bool ValidateExporterOptions(ExporterOptions options)
         {
-            if(!options.IsGeneretorSelected())
+            if (!options.IsGeneretorSelected())
             {
                 Console.WriteLine("Es muss mindestens eine Exportoption angegeben werden.\nFür Hilfe --help angeben.");
                 return false;
@@ -70,29 +70,34 @@
         {
             ExporterOptions result = ExporterOptions.None;
 
-            if(options.GenerateCompleteFile)
+            if (options.GenerateCompleteFile)
             {
                 result |= ExporterOptions.GenerateCompleteFile;
             }
 
-            if(options.GeneratePagelist)
+            if (options.GeneratePagelist)
             {
                 result |= ExporterOptions.GeneratePagelist;
             }
 
-            if(options.GenerateSeperateFiles)
+            if (options.GenerateSeperateFiles)
             {
                 result |= ExporterOptions.GenerateSeperateFiles;
-            }          
+            }
 
             if (options.IncludeUnderlineNotation)
             {
                 result |= ExporterOptions.IncludeUnderlineNotation;
             }
 
-            if(options.RemoveGrave)
+            if (options.RemoveGrave)
             {
                 result |= ExporterOptions.RemoveGravis;
+            }
+
+            if (options.ConvertToHtml)
+            {
+                result |= ExporterOptions.ConvertToHtml;
             }
 
             return result;
