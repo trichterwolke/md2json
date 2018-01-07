@@ -15,7 +15,8 @@
                   .Add(x => x.Content)
                   .Add(x => x.NextPage?.Header, "NextHeader")
                   .Add(x => x.PreviousPage?.Header, "PreviousHeader")
-                  .Add(x => x.Index, Index);
+                  .Add(x => x.Index, Index)
+                  .Add(x => x.Children?.Count, "Children.Count");
             }
         }
 

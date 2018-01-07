@@ -11,7 +11,7 @@
         [InlineData(ExporterOptions.None, false)]
         [InlineData(ExporterOptions.IncludeUnderlineNotation, false)]
         [InlineData(ExporterOptions.GenerateSeperateFiles, true)]
-        [InlineData(ExporterOptions.GenerateCompleteFile | ExporterOptions.GeneratePagelist, true)]
+        [InlineData(ExporterOptions.GenerateCompleteFile | ExporterOptions.GeneratePageList, true)]
         public void ValidateExporterOption(ExporterOptions options, bool expected)
         {
             var actual = Program.ValidateExporterOptions(options);
@@ -47,10 +47,10 @@
         {
             var data = new CommandLineOptions
             {
-                GeneratePagelist = true,
+                GeneratePageList = true,
             };
             var actual = Program.ParseExporterOptions(data);
-            var expected = ExporterOptions.GeneratePagelist;
+            var expected = ExporterOptions.GeneratePageList;
             Assert.Equal(expected, actual);
         }
 
@@ -94,11 +94,16 @@
             {
                 GenerateSeperateFiles = true,
                 GenerateCompleteFile = true,
-                GeneratePagelist = true,
+                GeneratePageList = true,
+                GeneratePageTree = true,
                 IncludeUnderlineNotation = true,
             };
             var actual = Program.ParseExporterOptions(data);
-            var expected = ExporterOptions.GenerateSeperateFiles | ExporterOptions.GenerateCompleteFile | ExporterOptions.GeneratePagelist | ExporterOptions.IncludeUnderlineNotation;
+            var expected = ExporterOptions.GenerateSeperateFiles 
+                | ExporterOptions.GenerateCompleteFile 
+                | ExporterOptions.GeneratePageList 
+                | ExporterOptions.GeneratePageTree
+                | ExporterOptions.IncludeUnderlineNotation;
             Assert.Equal(expected, actual);
         }
     }

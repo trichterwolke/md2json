@@ -75,9 +75,14 @@
                 result |= ExporterOptions.GenerateCompleteFile;
             }
 
-            if (options.GeneratePagelist)
+            if (options.GeneratePageList)
             {
-                result |= ExporterOptions.GeneratePagelist;
+                result |= ExporterOptions.GeneratePageList;
+            }
+
+            if(options.GeneratePageTree)
+            {
+                result |= ExporterOptions.GeneratePageTree;
             }
 
             if (options.GenerateSeperateFiles)

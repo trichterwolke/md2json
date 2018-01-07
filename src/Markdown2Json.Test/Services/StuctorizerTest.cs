@@ -67,7 +67,97 @@
 
             var expected = new[] { firstPage, secondPage, thirdPage };
 
-            Assert.Equal(expected, actual, Comparers.Page);                  
+            Assert.Equal(expected, actual, Comparers.Page);
+        }
+
+        [Fact]
+        public void CreatePageTree_simple()
+        {
+            var target = new Structorizer();
+
+            var expected = new[]
+            {
+                new Page
+                {
+                    Type = PageType.Section,
+                    Header = "Foo",
+                },
+                new Page
+                {
+                    Type = PageType.Section,
+                    Header = "Bar",
+                },
+                new Page
+                {
+                    Type = PageType.Section,
+                    Header = "Qux",
+                },
+            };
+
+            var actual = target.CreatePageTree(expected);
+
+            Assert.Equal(expected, actual, Comparers.Page);
+        }
+
+        [Fact]
+        public void CreatePageTree_with_children()
+        {
+            var target = new Structorizer();
+
+            var data = new[]
+            {
+                new Page
+                {
+                    Type = PageType.Section,
+                    Header = "Foo",
+                },
+                new Page
+                {
+                    Type = PageType.SubSection,
+                    Header = "Bar",
+                },
+                new Page
+                {
+                    Type = PageType.SubSection,
+                    Header = "Baz",
+                },
+                new Page
+                {
+                    Type = PageType.Section,
+                    Header = "Qux",
+                },
+            };
+
+            var expected = new[]
+            {
+                new Page
+                {
+                    Type = PageType.Section,
+                    Header = "Foo",
+                    Children = new []
+                    {
+                        new Page
+                        {
+                            Type = PageType.SubSection,
+                            Header = "Bar",
+                        },
+                        new Page
+                        {
+                            Type = PageType.SubSection,
+                            Header = "Baz",
+                        },
+                    },
+                },
+                new Page
+                {
+                    Type = PageType.Section,
+                    Header = "Qux",
+                },
+            };
+
+            var actual = target.CreatePageTree(data);
+
+            Assert.Equal(expected, actual, Comparers.Page);
         }
     }
 }

@@ -4,23 +4,20 @@
 
     public class CommandLineOptions
     {
-        [Option('s',
-            "source",
-            Required = true,
-            HelpText = "Input file to be processed.")]
+        [Option('s', "source", Required = true, HelpText = "Input file to be processed.")]
         public string Source { get; set; }
 
-        [Option('d',
-            "destination",
-            Required = true,
-            HelpText = "Target directory where the json files are created.")]
+        [Option('d', "destination", Required = true, HelpText = "Target directory where the json files are created.")]
         public string Destination { get; set; }
 
         [Option('u', "underline", HelpText = "Akzeptiert auch '=' und '-' um H1 und H2 zu untersuchen")]
         public bool IncludeUnderlineNotation { get; set; }
 
         [Option('l', "list", HelpText = "Erzeugt eine Datei mit der Auflistung aller Seiten")]
-        public bool GeneratePagelist { get; set; }
+        public bool GeneratePageList { get; set; }
+
+        [Option('t', "tree", HelpText = "Erzeugt eine Datei mit der hierarchischen Auflistung aller Seiten")]
+        public bool GeneratePageTree { get; set; }
 
         [Option('p', "pages", HelpText = "Erzeugt für jede Seite eine eigene Datei")]
         public bool GenerateSeperateFiles { get; set; }

@@ -40,11 +40,20 @@
 
         public object CreateFlatPageReference(Page page)
         {
-            return page == null ? null : new
-            {
-                index = FlattenOrdering(page.Index),
-                header = page.Header,
-            };
+            return page == null
+                ? null
+                : page.Children != null && page.Children.Any()
+                     ? new
+                     {
+                         index = FlattenOrdering(page.Index),
+                         header = page.Header,
+                         children = page.Children.Select(p => CreateFlatPageReference(p)),
+                     }
+                     : (object)new
+                     {
+                         index = FlattenOrdering(page.Index),
+                         header = page.Header,
+                     };
         }
 
         public string FlattenOrdering(Index index)
@@ -52,7 +61,7 @@
             return $"{index.Section}.{index.SubSection}.{index.SubSubSection}.{index.Segment}";
         }
 
-        public string CreatePageList(IEnumerable<Page> pages)
+        public string CreatePageOverview(IEnumerable<Page> pages)
         {
             var flat = pages.Select(p => CreateFlatPageReference(p));
             return JsonConvert.SerializeObject(flat);

@@ -7,18 +7,19 @@ namespace Markdown2Json.Entities
     {
         None = 0,
         IncludeUnderlineNotation = 1,
-        GeneratePagelist = 2,
-        GenerateSeperateFiles = 4,
-        GenerateCompleteFile = 8,
-        RemoveGravis = 16,
-        ConvertToHtml = 32,
+        GeneratePageList = 2,
+        GeneratePageTree = 4,
+        GenerateSeperateFiles = 8,
+        GenerateCompleteFile = 16,
+        RemoveGravis = 32,
+        ConvertToHtml = 64,
     }
 
     public static class ExporterOptionsExtensitons
     {
         public static bool IsGeneretorSelected(this ExporterOptions options)
         {
-            return (options & (ExporterOptions.GenerateCompleteFile | ExporterOptions.GenerateSeperateFiles | ExporterOptions.GeneratePagelist)) != 0;
+            return (options & (ExporterOptions.GenerateCompleteFile | ExporterOptions.GenerateSeperateFiles | ExporterOptions.GeneratePageList)) != 0;
         }
     }
 }

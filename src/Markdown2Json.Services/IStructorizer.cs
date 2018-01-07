@@ -6,5 +6,6 @@ namespace Markdown2Json.Services
     public interface IStructorizer
     {
         void Structure(IEnumerable<Page> pages);
+        IEnumerable<Page> CreatePageTree(IList<Page> pages);
     }
 }
